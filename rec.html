@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time and Cost Calculator</title>
+    <title>Time Calculator</title>
     <!-- Include the Tailwind CSS stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
     <div class="bg-white p-8 rounded shadow-md w-96">
-        <h1 class="text-2xl font-bold mb-4">Time and Cost Calculator</h1>
+        <h1 class="text-2xl font-bold mb-4">Time Calculator</h1>
 
         <div class="mb-4">
             <label class="block mb-2" for="timeA">Enter time A:</label>
@@ -22,7 +22,7 @@
             <input class="w-full p-2 border rounded" type="time" id="timeB" required>
         </div>
 
-        <button class="w-full mb-4 bg-green-500 text-white p-2 rounded cursor-pointer" onclick="calculateTotalTimeAndCost()">Calculate Total Time and Cost</button>
+        <button class="w-full mb-4 bg-green-500 text-white p-2 rounded cursor-pointer" onclick="calculateTotalTime()">Calculate Total Time</button>
 
         <div id="result" class="mb-4 text-lg"></div>
 
@@ -31,15 +31,12 @@
         <div id="timeList" class="mb-4"></div>
 
         <div id="totalSum" class="text-lg"></div>
-
-        <div id="totalCost" class="text-lg"></div>
     </div>
 
     <script>
         let timeIntervals = [];
-        const hourlyRate = 200; // Set your hourly rate here
 
-        function calculateTotalTimeAndCost() {
+        function calculateTotalTime() {
             const timeA = document.getElementById('timeA').valueAsDate;
             const timeB = document.getElementById('timeB').valueAsDate;
 
@@ -53,13 +50,12 @@
             const minutes = Math.floor((timeDiff % 3600000) / 60000);
 
             const resultElement = document.getElementById('result');
-            resultElement.textContent = `Total time : ${hours} hours and ${minutes} minutes.`;
+            resultElement.textContent = `Total time between A and B: ${hours} hours and ${minutes} minutes.`;
 
             // Reset the timeIntervals array
             timeIntervals = [];
             displayTimeIntervals();
             displayTotalSum();
-            displayTotalCost();
         }
 
         function addTime() {
@@ -78,7 +74,6 @@
             timeIntervals.push({ hours, minutes });
             displayTimeIntervals();
             displayTotalSum();
-            displayTotalCost();
         }
 
         function displayTimeIntervals() {
@@ -99,16 +94,7 @@
             const totalMinutes = timeIntervals.reduce((acc, interval) => acc + interval.minutes, 0);
 
             const formattedTotal = formatTotalTime(totalHours, totalMinutes);
-            totalSumElement.textContent = `Total Hour: ${formattedTotal}`;
-        }
-
-        function displayTotalCost() {
-            const totalCostElement = document.getElementById('totalCost');
-            const totalHours = timeIntervals.reduce((acc, interval) => acc + interval.hours, 0);
-            const totalMinutes = timeIntervals.reduce((acc, interval) => acc + interval.minutes, 0);
-
-            const totalCost = (totalHours + totalMinutes / 60) * hourlyRate;
-            totalCostElement.textContent = `Total cost: ${totalCost.toFixed(2)} TK`;
+            totalSumElement.textContent = `Total sum of all intervals: ${formattedTotal}`;
         }
 
         function formatTotalTime(hours, minutes) {
