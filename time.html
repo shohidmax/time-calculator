@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Calculator</title>
+    <!-- Include the Tailwind CSS stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white p-8 rounded shadow-md w-96">
+        <h1 class="text-2xl font-bold mb-4">Time Calculator</h1>
+
+        <label class="block mb-2" for="timeA">Enter time A:</label>
+        <input class="w-full p-2 border rounded" type="time" id="timeA" required>
+
+        <label class="block mb-2" for="timeB">Enter time B:</label>
+        <input class="w-full p-2 border rounded" type="time" id="timeB" required>
+
+        <button class="w-full mt-4 bg-green-500 text-white p-2 rounded cursor-pointer" onclick="calculateTotalTime()">Calculate Total Time</button>
+
+        <div id="result" class="mt-4 text-lg"></div>
+    </div>
+
+    <script>
+        function calculateTotalTime() {
+            const timeA = document.getElementById('timeA').valueAsDate;
+            const timeB = document.getElementById('timeB').valueAsDate;
+
+            if (!timeA || !timeB) {
+                alert('Please enter both times.');
+                return;
+            }
+
+            const timeDiff = Math.abs(timeB - timeA);
+            const hours = Math.floor(timeDiff / 3600000);
+            const minutes = Math.floor((timeDiff % 3600000) / 60000);
+
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `Total time  : ${hours} hours ~ ${minutes} minutes.`;
+        }
+    </script>
+</body>
+</html>
